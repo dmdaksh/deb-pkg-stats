@@ -142,7 +142,7 @@ Tool configuration is centralized in `pyproject.toml`:
 - **Black**: `line-length = 88`, `target-version = ['py310']`
 - **Ruff**: `line-length = 88`, rules under `[tool.ruff.lint]`, ignores E501
 - **isort**: `profile = 'black'`, first-party imports recognized
-- **MyPy**: Python 3.10, `disallow_untyped_defs = true`, `ignore_missing_imports = true`
+- **MyPy**: Python 3.10, `disallow_untyped_defs = true`, `ignore_missing_imports = false`
 - **pytest**: `addopts = '-rA -q --cov=package_statistics --cov-report term-missing'`, `testpaths = ['tests']`
 - **.gitignore**: Excludes Python caches, coverage reports, virtual environments, OS files, and LaTeX auxiliary outputs.
 
