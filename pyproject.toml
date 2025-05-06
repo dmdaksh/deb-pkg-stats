@@ -32,11 +32,11 @@ known_first_party = ["package_statistics"]
 python_version = "3.10"        # Or your target Python version
 warn_return_any = true
 warn_unused_configs = true
-ignore_missing_imports = true # Can be made stricter later
+ignore_missing_imports = false
 disallow_untyped_defs = true  # Enforce type hints on functions
 # Add other mypy configurations as needed
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-rA -q --cov=package_statistics --cov-report term-missing" # Changed -ra to -rA
+addopts = "-rA -q --cov=package_statistics --cov-report term-missing"
 testpaths = ["tests"]

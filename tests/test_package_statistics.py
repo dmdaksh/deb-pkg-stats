@@ -262,9 +262,7 @@ def test_get_top_packages_download_error(monkeypatch: pytest.MonkeyPatch) -> Non
         # The 4th argument should be hdrs: email.message.Message | None
         # The 5th argument should be fp: IO[Any] | None
         # Passing an empty Message object for headers and None for fp
-        raise HTTPError(
-            url, 404, "Not Found", Message(), None
-        )  # Changed None to Message() for headers
+        raise HTTPError(url, 404, "Not Found", Message(), None)
 
     monkeypatch.setattr(
         package_statistics, "urlopen", fake_urlopen_error
