@@ -1,0 +1,87 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=0.6in, top=0.7in, bottom=0.7in]{geometry} % Reduced margins for conciseness
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx} % Times font for a classic look
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs} % For elegant tables
+\usepackage{graphicx}
+\usepackage{sectsty} % To customize section headings
+\usepackage{calc} % For \widthof command
+\usepackage{microtype} % Improves typography and spacing for elegance and conciseness
+
+\sectionfont{\normalsize\bfseries} % Slightly smaller section titles
+\subsectionfont{\small\bfseries}
+
+\setlist{nosep,left=0pt, itemsep=1pt, topsep=2pt} % Tighter list spacing
+\title{Package Statistics Command-Line Tool \\ \large Interview Test Submission Report}
+\author{Daksh Maheshwari}
+\date{\today}
+\begin{document}
+\pagestyle{empty}
+\small % Use small font for the main body to fit more content
+\maketitle
+\vspace{-1.5em} % Reduce space after title
+
+\section*{Overview}
+\vspace{-0.5em} % Reduce space after section title
+This report details the design, implementation, and testing of the \texttt{package\_statistics.py} command-line tool. It downloads Debian `Contents-<arch>.gz` indices, parses file-to-package mappings, aggregates file counts per package, and presents the top-N packages in a formatted table.
+
+\section*{Key Features}
+\vspace{-0.5em}
+\begin{itemize}
+	\item \textbf{Configurable:} Customize architecture, mirror, distribution, component, and top-N via CLI arguments.
+	\item \textbf{Robust Parsing:} Handles large indices, paths with spaces, and skips malformed/header lines.
+	\item \textbf{Error Handling:} Gracefully handles network errors and broken pipes (e.g., piping to `head`).
+	\item \textbf{Clear Output:} Presents results in a formatted table with dynamic column widths.
+	\item \textbf{Quality Assurance:} Type-annotated (Python 3.10+), formatted (\texttt{black}), linted (\texttt{ruff}), and type-checked (\texttt{mypy}).
+\end{itemize}
+
+\section*{Implementation Details}
+\vspace{-0.5em}
+Modular functions handle specific tasks:
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries\texttt{download\_contents:}}, style=unboxed, itemsep=1pt]
+	\item[\texttt{download\_contents:}] Fetches the index file using \texttt{urllib.request}, handling HTTP/URL errors.
+	\item[\texttt{parse\_contents:}] Iterates decompressed lines, uses \texttt{str.rsplit(None, 1)} to separate path/packages, extracts base package names.
+	\item[\texttt{get\_top\_packages:}] Orchestrates download, decompression (\texttt{gzip}), text wrapping (\texttt{TextIOWrapper}), parsing, and counting (\texttt{Counter}).
+	\item[\texttt{main:}] Handles CLI arguments (\texttt{argparse}), logging, calls core logic, formats output table, and manages \texttt{BrokenPipeError}.
+\end{description}
+
+\section*{Testing \& Coverage}
+\vspace{-0.5em}
+Comprehensive \texttt{pytest} suite (\texttt{test\_package\_statistics.py}) covers parsing logic, download simulation (mocking), aggregation, and CLI behavior. Achieves \textbf{~93\% line coverage} (via \texttt{pytest-cov}).
+
+\section*{Tools \& Configuration}
+\vspace{-0.5em}
+Project automation and configuration are centralized for consistency:
+\begin{itemize}
+	\item \textbf{Makefile:} Targets for install (\texttt{requirements-dev.txt}), format (\texttt{black}, \texttt{ruff --fix}), lint, typecheck, test, check, and clean.
+	\item \textbf{pyproject.toml:} Unified configuration for \texttt{black}, \texttt{ruff} (lint), \texttt{isort}, \texttt{mypy}, and \texttt{pytest}.
+	\item \textbf{requirements-dev.txt:} Defines dev dependencies: \texttt{black}, \texttt{ruff}, \texttt{mypy}, \texttt{pytest}, and \texttt{pytest-cov}.
+	\item \textbf{.gitignore:} Excludes Python caches, coverage reports, virtual environments, OS files, and LaTeX auxiliary outputs.
+\end{itemize}
+
+\section*{Time Log}
+\vspace{-0.5em}
+\vspace{0.25em}
+\centering
+\begin{tabular}{@{}lr@{}}
+	\toprule
+	\textbf{Task}                     & \textbf{Time Spent} \\
+	\midrule
+	Requirements Review               & 0h 20m              \\
+	Initial Coding                    & 0h 45m              \\
+	Parsing Logic Refinement          & 0h 20m              \\
+	CLI, Error Handling, Pipe Support & 0h 30m              \\
+	Unit Tests Development            & 2h 15m              \\
+	Test Coverage Improvements        & 0h 20m              \\
+	Documentation (README, Report)    & 0h 30m              \\
+	Makefile \& Build Enhancements    & 0h 15m              \\
+	Output Formatting                 & 0h 25m              \\
+	Final Debugging \& Cleanup        & 0h 20m              \\
+	\midrule
+	\textbf{Total Estimated Time}     & \textbf{6h}         \\
+	\bottomrule
+\end{tabular}
+
+\end{document}
