@@ -22,15 +22,15 @@ It includes logging, error handling for download failures, and clean exit on bro
 - **Broken-pipe support** to exit cleanly when downstream commands close the pipe.
 - **Type-annotated code** (Python 3.10+), checked by `mypy`.
 - **Pre-commit style enforcement** via `black` (formatting) and `ruff` (linting and import sorting).
-- **Automated build and test** targets available in the `Makefile`.
+- **Makefile targets** for development tasks (formatting, linting, testing).
 
 ## Installation
 
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/dmdaksh/package_statistics.git
-   cd package_statistics
+   git clone https://github.com/dmdaksh/deb-pkg-stats.git
+   cd deb-pkg-stats
    ```
 
 2. (Optional) Create and activate a virtual environment:
@@ -44,6 +44,8 @@ It includes logging, error handling for download failures, and clean exit on bro
 
    ```bash
    pip install -r requirements-dev.txt
+   # or
+   make install
    ```
 
 ## Usage
@@ -82,11 +84,7 @@ chmod +x src/package_statistics.py
 
 ## Testing
 
-This project uses `pytest` with coverage reporting. Development dependencies (including `pytest` and `pytest-cov`) are installed via:
-
-```bash
-pip install -r requirements-dev.txt
-```
+This project uses `pytest` with coverage reporting.
 
 To run the tests:
 
